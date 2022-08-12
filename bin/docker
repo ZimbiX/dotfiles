@@ -4,6 +4,9 @@ set -Eeuo pipefail
 
 if [[ "${PODMAN-}" == "true" ]]; then
   podman "$@"
+elif [[ "$1" == compose ]]; then
+  shift
+  docker-compose "$@"
 else
   sudo -E "$(orig docker)" "$@"
 fi

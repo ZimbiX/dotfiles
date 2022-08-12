@@ -5,5 +5,11 @@ set -Eeuo pipefail
 if [[ "${PODMAN-}" == "true" ]]; then
   exec podman "$@"
 else
-  exec sudo -E "$(orig docker-compose)" "$@"
+  extra_args=()
+  # Prevent 'the input device is not a TTY' error from `docker compose run` by disabling TTY when standard output is not a TTY
+  if [[ "$1" == run && "$(tty 2>/dev/null)" == "not a tty" ]]; then
+    extra_args=(run --no-TTY)
+    shift
+  fi
+  exec sudo -E "$(orig docker-compose)" "${extra_args[@]}" "$@"
 fi
