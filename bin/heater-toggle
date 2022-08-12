@@ -1,0 +1,25 @@
+#!/bin/bash
+
+HEATER_IP=10.99.2.16
+HEATER_PORT=49153
+
+state_code=$(
+  curl -A '' -X POST -H 'Content-type: text/xml; charset="utf-8"' -H 'SOAPACTION: "urn:Belkin:service:basicevent:1#GetBinaryState"' -s http://$HEATER_IP:$HEATER_PORT/upnp/control/basicevent1 -d '<?xml version="1.0" encoding="utf-8"?>
+    <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <s:Body>
+      <u:GetBinaryState xmlns:u="urn:Belkin:service:basicevent:1"/>
+    </s:Body>
+  </s:Envelope>' \
+  | tee /dev/stderr \
+  | grep -oP '(?<=BinaryState>)[0-1]'
+)
+
+if [[ $state_code == 0 ]]; then
+  new_state=on
+else
+  new_state=off
+fi
+
+echo "New state: $new_state"
+
+PORT=$HEATER_PORT ~/Projects/000_Others/matthewhuie-wemo-cli/wemo-cli $HEATER_IP $new_state
