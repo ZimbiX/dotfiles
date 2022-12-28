@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+new_state=$1
+
+HEATER_IP=10.99.2.16
+HEATER_PORT=49153
+
+cleanup() {
+  jobs -p | xargs -r kill
+}
+trap cleanup exit
+
+rm -f /tmp/heater-set-completed
+
+make-request() {
+  PORT=$HEATER_PORT ~/Projects/000_Others/matthewhuie-wemo-cli/wemo-cli $HEATER_IP "$new_state" 2>&1 | tee /dev/stderr | grep '200 OK' >/dev/null
+  if [[ $? == 0 ]]; then
+    touch /tmp/heater-set-completed
+  fi
+}
+
+until [[ -f /tmp/heater-set-completed ]]; do
+  make-request &
+  sleep 0.5
+done

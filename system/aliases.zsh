@@ -87,3 +87,6 @@ sudos() {
   done &
   disown
 }
+
+alias h1=heater-on
+alias h0=heater-off
