@@ -155,9 +155,9 @@ if [[ "$SIMPLE_PROMPT" == 'true' ]]; then
   export PROMPT=""
 else
   export PROMPT=$'\n$(rb_prompt)in $(hostname_if_ssh)$(directory_name) $(git_dirty)$(need_push)\n$(gcloud_prompt) $(kube_ps1) $(disk_remaining) - $(date)$(sudos_prompt)'
-  if typeset -f dex-env-shell-prompt > /dev/null; then
-    export PROMPT="$PROMPT"$'\n$(dex-env-shell-prompt)'
-  fi
+  # if typeset -f dex-env-shell-prompt > /dev/null; then
+  #   export PROMPT="$PROMPT"$'\n$(dex-env-shell-prompt)'
+  # fi
 fi
 export PROMPT="$PROMPT"$'\n$(exit_code_prompt)'
 set_prompt () {
