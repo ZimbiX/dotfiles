@@ -133,6 +133,15 @@ disk_remaining() {
   df -h / --output=avail | tail -1 | tr -d ' \n' && printf B
 }
 
+hostname_if_ssh() {
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo -n "%{$fg_bold[green]%}"
+    hostname | tr -d "\n"
+    echo -n "%{$reset_color%}"
+    echo -n :
+  fi
+}
+
 exit_code_prompt() {
   if [[ "$last_exit_code" == "0" ]]; then
     local exit_code_prompt_colour="%{$fg_bright_bold[green]%}"  # "%F{10}" #"$lc%{$(($color[green]+8))%}"
@@ -145,7 +154,7 @@ exit_code_prompt() {
 if [[ "$SIMPLE_PROMPT" == 'true' ]]; then
   export PROMPT=""
 else
-  export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n$(gcloud_prompt) $(kube_ps1) $(disk_remaining) - $(date)$(sudos_prompt)'
+  export PROMPT=$'\n$(rb_prompt)in $(hostname_if_ssh)$(directory_name) $(git_dirty)$(need_push)\n$(gcloud_prompt) $(kube_ps1) $(disk_remaining) - $(date)$(sudos_prompt)'
   if typeset -f dex-env-shell-prompt > /dev/null; then
     export PROMPT="$PROMPT"$'\n$(dex-env-shell-prompt)'
   fi
