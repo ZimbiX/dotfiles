@@ -90,3 +90,8 @@ sudos() {
 
 alias h1=heater-on
 alias h0=heater-off
+
+if [[ "$TERM" == xterm-kitty ]]; then
+  alias ssh='kitty +kitten ssh'
+  alias icat='kitty icat --align=left --background="#fff"'
+fi
