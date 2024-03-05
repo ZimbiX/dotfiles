@@ -1,1 +1,1 @@
-[[ -f ~/.ssh_agent ]] && . ~/.ssh_agent
+[[ -f ~/.ssh_agent ]] && . ~/.ssh_agent >/dev/null
