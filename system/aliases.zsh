@@ -69,9 +69,6 @@ inspect-jq() { x=$(</dev/stdin); echo "$x" | jq -C . > /dev/tty; echo "$x"; }
 aussie-broadband() {
   curl -s https://myaussie-api.aussiebroadband.com.au/customer -b myaussie_cookie="$AUSSIE_BROADBAND_TOKEN"
 }
-ip-mad() {
-  aussie-broadband | jq -r '.services.NBN[] | select(.nbnDetails.product == "HFC").ipAddresses[0]'
-}
 ip-home() {
   aussie-broadband | jq -r '.services.NBN[] | select(.nbnDetails.product != "HFC").ipAddresses[0]'
 }
