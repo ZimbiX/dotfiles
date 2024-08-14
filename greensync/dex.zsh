@@ -9,6 +9,10 @@ for file in $scripts; do
   [[ -s $file ]] && source $file
 done
 
+if ! typeset -f dex-dev > /dev/null; then
+  return
+fi
+
 dex-db-dev
 dex-dev > /dev/null
 
