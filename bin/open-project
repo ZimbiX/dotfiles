@@ -73,9 +73,11 @@ focus_window_of_project_name() {
   project_name="$1"
   window_title="($project_name) - Sublime Text"
   echo "Attempting to focus window: '$window_title'" >&2
-  # wmctrl -a "$window_title" # Doesn't work on Wayland
-  return 1 # Disable Gnome JS eval which is prevented in new Gnome =(
-  gdbus call -e -d org.gnome.Shell -o /org/gnome/Shell -m org.gnome.Shell.Eval "var mw = global.get_window_actors().map(w=>w.meta_window).find(mw=>mw.get_title().includes('$window_title')).activate(0)" | grep -E '^\(true,' > /dev/null
+  if [[ "${XDG_SESSION_TYPE-}" == x11 ]]; then
+    focus_window_on_x
+  else
+    focus_window_on_wayland
+  fi
 }
 
 focus_window_of_project_file() {
@@ -98,18 +100,50 @@ open_project_file_and_focus_window() {
   done
 }
 
+focus_window_on_x() {
+  wmctrl -a "$window_title"
+}
+
+focus_window_on_wayland() {
+  enable_gnome_unsafe_mode_if_necessary
+  gdbus call -e -d org.gnome.Shell -o /org/gnome/Shell -m org.gnome.Shell.Eval "var mw = global.get_window_actors().map(w=>w.meta_window).find(mw=>mw.get_title().includes('$window_title')).activate(0)" | grep -E '^\(true,' > /dev/null
+}
+
+# Gnome JS eval is prevented by default in new Gnome =(
+# Enable it ('unsafe mode') with a macro
+enable_gnome_unsafe_mode_if_necessary() {
+  if ! is_gnome_js_eval_working; then
+    enable_gnome_unsafe_mode
+  fi
+}
+
+# If the JavaScript expression '1' evaluates successfully, then unsafe mode is already enabled
+is_gnome_js_eval_working() {
+  gdbus call -e -d org.gnome.Shell -o /org/gnome/Shell -m org.gnome.Shell.Eval 1 | grep -E '^\(true,' > /dev/null
+}
+
+enable_gnome_unsafe_mode() {
+  echo "Need to enable Gnome unsafe mode, with Looking Glass using macro..." >&2
+  ydotool key 56:1 60:1 60:0 56:0 # Alt + F2
+  ydotool type -d 0 lg
+  ydotool key 28:1 28:0 # Enter
+  ydotool key 29:1 30:1 30:0 29:0 14:1 14:0 # Ctrl + A, Backspace
+  ydotool type -d 0 'global.context.unsafe_mode = true'
+  ydotool key 28:1 28:0 1:1 1:0 # Enter, Escape
+}
+
 first_dir="${1-$PWD}"
 all_dirs=("${@-$first_dir}")
 
 existing_project_file="$(find_existing_project_file "$first_dir")"
 if [ -n "$existing_project_file" ]; then
-  echo "Project exists: $existing_project_file"
+  echo "Project exists: $existing_project_file" >&2
   focus_window_of_project_file "$existing_project_file" || (
-    echo "Project not already open"
+    echo "Project not already open" >&2
     open_project_file_and_focus_window "$existing_project_file"
   )
 else
-  echo "Project doesn't exist yet"
+  echo "Project doesn't exist yet" >&2
   new_project_file="$(create_project_file "${all_dirs[@]}")"
   open_project_file_and_focus_window "$new_project_file"
 fi
