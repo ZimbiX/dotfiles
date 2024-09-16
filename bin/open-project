@@ -91,13 +91,14 @@ open_project_file_and_focus_window() {
   local project_file
   project_file="$1"
   subl --project "$project_file"
-  echo -n "Waiting for Sublime to open project"
-  return # Sublime seems to auto-focus now, thankfully!
+  echo -n "Waiting for Sublime to open project" >&2
+  # Sublime seems to auto-focus now, but if Sublime wasn't already open, it might not put the right window on top
   while :; do
     focus_window_of_project_file "$project_file" &> /dev/null && break
     printf .
     sleep 0.01
   done
+  echo >&2
 }
 
 focus_window_on_x() {
