@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Prevent the deprecation warning that results from using the symlink (/usr/bin/mysql -> mariadb):
+# "mysql: Deprecated program name. It will be removed in a future release, use '/usr/bin/mariadb' instead"
+
+exec mariadb "$@"
