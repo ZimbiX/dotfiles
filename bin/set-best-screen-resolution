@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Set best screen resolution available
+# For use in my VMware VM where I've had to create manual boot loader entries for each resolution, e.g. by adding this to the kernel options: video=Virtual-1:2560x1440@60
+
+set -Eeuo pipefail
+
+best_resolution="$(gnome-randr query | grep -oE '(2496x1664|2560x1440)@[0-9.]+')"
+echo "Best resolution: $best_resolution"
+set -x
+gnome-randr modify -m "$best_resolution" Virtual-1

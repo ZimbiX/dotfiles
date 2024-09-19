@@ -64,6 +64,8 @@ alias gcgpu='google-chrome-with-gpu'
 alias cp0='crashplan-stop'
 alias cp1='crashplan-start'
 
+alias sr=set-best-screen-resolution
+
 inspect-jq() { x=$(</dev/stdin); echo "$x" | jq -C . > /dev/tty; echo "$x"; }
 
 aussie-broadband() {
