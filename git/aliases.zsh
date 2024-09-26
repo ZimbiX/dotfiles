@@ -37,13 +37,16 @@ function ga {
   eval git add $args
 }
 
-function log_and_run_command {
-  args="$@"
+log_command() {
   echo -n "\e[34m" >&2
   echo -n '--> ' >&2
-  echo -n $args >&2
+  echo -n "$@" >&2
   echo "\e[39m" >&2
-  eval $args
+}
+
+log_and_run_command() {
+  log_command "$@"
+  eval "$@"
 }
 
 alias gr='git reset'
