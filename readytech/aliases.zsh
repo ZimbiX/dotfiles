@@ -27,7 +27,7 @@ mysql-wait() {
   if docker compose config 2>/dev/null | grep 'image: mysql' >/dev/null; then
     echo "Waiting for MySQL to start accepting connections"
     local mysql_command
-    mysql_command=$(dotenv sh -c 'echo "mysql -h \"$DB_HOST\" -P \"$DB_PORT\" -u \"$DB_USER_NAME\" -p\"$DB_PWD\" -e \"SELECT 1\""')
+    mysql_command=$(. ./.env && echo "mysql -h \"$DB_HOST\" -P \"$DB_PORT\" -u \"$DB_USER_NAME\" -p\"$DB_PWD\" -e \"SELECT 1\"")
     log_command "(loop)" "$mysql_command"
     while ! eval "$mysql_command" &> /dev/null; do printf .; sleep 0.02; done; echo
   fi
