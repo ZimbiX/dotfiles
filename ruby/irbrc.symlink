@@ -38,3 +38,17 @@ end
 def r
   reload!
 end
+
+# Find and load local .irbrc
+current_dir, previous_dir = Dir.pwd, nil
+loop do
+  irbrc_path = current_dir + '/.irbrc'
+  break if irbrc_path == __FILE__
+  if File.exist?(irbrc_path)
+    load irbrc_path
+    break
+  end
+  previous_dir = current_dir
+  current_dir = File.expand_path("..", current_dir)
+  break if current_dir == previous_dir
+end
