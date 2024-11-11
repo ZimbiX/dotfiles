@@ -1,11 +1,9 @@
-if (( $+commands[sublim] )); then
-  export EDITOR='sublime'
+if (( $+commands[vim] )); then
+  export EDITOR=vim
+elif (( $+commands[vi] )); then
+  export EDITOR=vi
 elif (( $+commands[nano] )); then
-  export EDITOR='nano'
-elif (( $+commands[vim] )); then
-  export EDITOR='vim'
-else
-  export EDITOR='vi'
+  export EDITOR=nano
 fi
 
 if (( $+commands[google-chrome-stable] )); then
