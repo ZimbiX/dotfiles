@@ -1,14 +1,8 @@
-# Sample gitconfig
-#
-
 [user]
-        name = AUTHORNAME
-        email = AUTHOREMAIL
-        # signingkey = 9DBC1A5E273DB357
-[commit]
-        # gpgsign = true
+        name = Brendan Weibrecht
+        email = brendan@weibrecht.net.au
 [credential]
-        helper = GIT_CREDENTIAL_HELPER
+        helper = cache
 [hub]
         protocol = https
 [alias]
@@ -60,3 +54,5 @@
         diffFilter = delta --color-only
 [includeIf "gitdir:~/Projects/"]
         path = .gitconfig-projects
+[include]
+        path = .gitconfig.local
