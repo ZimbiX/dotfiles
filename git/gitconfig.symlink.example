@@ -58,5 +58,5 @@
         navigate = true
 [interactive]
         diffFilter = delta --color-only
-[url "git@github.com:"]
-        insteadof = https://github.com/
+[includeIf "gitdir:~/Projects/"]
+        path = .gitconfig-projects
