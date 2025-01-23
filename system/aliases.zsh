@@ -22,7 +22,12 @@ setopt interactivecomments
 # ----------------------------------------------------------
 
 alias ls="$ls_bin"
-alias l="ls -alF --icons --colour-scale --header --git -a -g"
+
+if (( $+commands[exa] )); then
+  alias l="exa -alF --icons --colour-scale --header --git -g"
+else
+  alias l="ls -alF --color"
+fi
 
 alias llp="list-all-files-with-numeric-premissions"
 
