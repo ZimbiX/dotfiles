@@ -178,9 +178,9 @@ git-primary-branch-name() {
   dirname_branch=$(git rev-parse --show-toplevel | grep -oP '(?<=:)\S+')
   if [[ -n "$dirname_branch" ]]; then
     echo -n "$dirname_branch"
-  elif git branch -al | grep -E '^ *remotes/origin/main$' > /dev/null; then
+  elif git branch -al | grep -E '^ *remotes/(origin|upstream)/main$' > /dev/null; then
     echo -n main
-  elif git branch -al | grep -E '^ *remotes/origin/master$' > /dev/null; then
+  elif git branch -al | grep -E '^ *remotes/(origin|upstream)/master$' > /dev/null; then
     echo -n master
   fi
 }
