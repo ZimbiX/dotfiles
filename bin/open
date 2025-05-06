@@ -1,3 +1,7 @@
 #!/bin/bash
 
-exec xdg-open "$@" 2>&1 | grep -vE '(^Opening in existing browser session\.$|InitializeSandbox\(\) called with multiple threads in process gpu-process.)'
+if [ "$(uname -s)" == "Darwin" ]; then
+  exec "$(orig open)" "$@"
+else
+  exec xdg-open "$@" 2>&1 | grep -vE '(^Opening in existing browser session\.$|InitializeSandbox\(\) called with multiple threads in process gpu-process.)'
+fi
