@@ -130,7 +130,9 @@ sudos_prompt() {
 }
 
 disk_remaining() {
-  df -h / --output=avail | tail -1 | tr -d ' \n' && printf B
+  local df=$(df -h /)
+  echo "$df" | grep -E '^Filesystem +Size +Used +Avail ' >/dev/null || echo "Warning: df headers are unexpected - free disk space in prompt may be wrong" >&2
+  df -kh / | tail -1 | awk '{ print $4 }' | tr -d '\ni' && printf B
 }
 
 hostname_if_ssh() {
