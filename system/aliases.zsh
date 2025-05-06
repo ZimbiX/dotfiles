@@ -1,8 +1,8 @@
 # grc overides for ls
 #   Made possible through contributions from generous benefactors like
 #   `brew install coreutils`
-if (( $+commands[exa] )); then
-  ls_bin="exa"
+if (( $+commands[eza] )); then
+  ls_bin="eza"
 else
   ls_bin="ls"
 fi
@@ -23,8 +23,8 @@ setopt interactivecomments
 
 alias ls="$ls_bin"
 
-if (( $+commands[exa] )); then
-  alias l="exa -alF --icons --colour-scale --header --git -g"
+if (( $+commands[eza] )); then
+  alias l="eza -alF --icons --colour-scale --header --git -g"
 else
   alias l="ls -alF --color"
 fi
