@@ -1,3 +1,3 @@
 #!/bin/bash
 
-PATH=$(echo "$PATH" | sed -E 's=(/home/brendan/.dotfiles/bin:|\./bin:)==g') which "$@"
+PATH=$(echo "$PATH" | sed -E "s=($HOME/.dotfiles/bin:|\\./bin:)==g") which "$@"
