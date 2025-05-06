@@ -1,0 +1,28 @@
+{
+  "schemes" : [
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productName" : "ROCCAT Kova Aimo",
+          "vendorID" : "0x1e7d",
+          "productID" : "0x2cf1"
+        }
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 0
+        },
+        "speed" : {
+          "vertical" : 20
+        }
+      },
+      "pointer" : {
+        "acceleration" : 0.1246,
+        "disableAcceleration" : false,
+        "speed" : 0.2374
+      }
+    }
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+}
