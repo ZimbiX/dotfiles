@@ -19,8 +19,12 @@ subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 Run this:
 
 ```sh
-git clone https://github.com/ZimbiX/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+mkdir -p ~/Projects
+cd ~/Projects
+git clone git@github.com:ZimbiX/dotfiles.git
+cd dotfiles
+ln -s ~/Projects/dotfiles ~/.dotfiles
+git submodule update --init
 script/bootstrap
 ```
 
