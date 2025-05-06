@@ -130,9 +130,14 @@ sudos_prompt() {
 }
 
 disk_remaining() {
-  local df=$(df -h /)
-  echo "$df" | grep -E '^Filesystem +Size +Used +Avail ' >/dev/null || echo "Warning: df headers are unexpected - free disk space in prompt may be wrong" >&2
-  df -kh / | tail -1 | awk '{ print $4 }' | tr -d '\ni' && printf B
+  local disk
+  if [[ $(uname -a) == *" Android" ]]; then
+    fs=/storage/emulated
+  else
+    fs=/
+  fi
+  df -kh "$fs" | grep -E '^Filesystem +Size +Used +Avail ' >/dev/null || echo "Warning: df headers are unexpected - free disk space in prompt may be wrong" >&2
+  df -kh "$fs" | tail -1 | awk '{ print $4 }' | tr -d '\ni' && printf B
 }
 
 hostname_if_ssh() {
