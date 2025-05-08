@@ -1,26 +1,26 @@
 {
   "schemes" : [
     {
+      "pointer" : {
+        "speed" : 0.2612,
+        "acceleration" : 0.1246,
+        "disableAcceleration" : false
+      },
       "if" : {
         "device" : {
-          "category" : "mouse",
           "productName" : "ROCCAT Kova Aimo",
           "vendorID" : "0x1e7d",
-          "productID" : "0x2cf1"
+          "productID" : "0x2cf1",
+          "category" : "mouse"
         }
       },
       "scrolling" : {
-        "acceleration" : {
-          "vertical" : 0
-        },
         "speed" : {
           "vertical" : 20
+        },
+        "acceleration" : {
+          "vertical" : 0.2
         }
-      },
-      "pointer" : {
-        "acceleration" : 0.1246,
-        "disableAcceleration" : false,
-        "speed" : 0.2374
       }
     }
   ],
