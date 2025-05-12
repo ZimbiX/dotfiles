@@ -82,9 +82,13 @@ is_greensync_project() {
 focus_window_of_project_name() {
   local project_name window_title
   project_name="$1"
-  window_title="($project_name) - Sublime Text"
+  if [[ "${OSTYPE-}" == darwin* ]]; then
+    window_title="— $project_name"
+  else
+    window_title="($project_name) - Sublime Text"
+  fi
   echo "Attempting to focus window: '$window_title'" >&2
-  if [[ "$OSTYPE" == darwin* ]]; then
+  if [[ "${OSTYPE-}" == darwin* ]]; then
     focus_window_on_macos
   elif [[ "${XDG_SESSION_TYPE-}" == x11 ]]; then
     focus_window_on_x
@@ -115,7 +119,15 @@ open_project_file_and_focus_window() {
 }
 
 focus_window_on_macos() {
-  echo "Focusing window on MacOS is not yet implemented" >&2
+  # From: https://apple.stackexchange.com/questions/350940/use-applescript-to-raise-and-focus-on-window
+  osascript &>/dev/null <<EOF
+    tell application "System Events"
+      tell process "Sublime Text"
+        set frontmost to true
+        click (first menu item whose name contains "$window_title") of menu "Window" of menu bar 1
+      end tell
+    end tell
+EOF
 }
 
 focus_window_on_x() {
