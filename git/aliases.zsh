@@ -10,7 +10,9 @@ gcl() {
   log_and_run_command hub clone "$@"
 }
 
-gclg() {
+git-clone-with-org() {
+  default_org="$1"
+  shift
   non_repo_args=()
   while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -23,11 +25,14 @@ gclg() {
   if [[ $repo = *"/"* ]]; then
     namespaced_repo=$repo
   else
-    namespaced_repo=greensync/$repo
+    namespaced_repo=$default_org/$repo
   fi
 
   gcl "$namespaced_repo" "${non_repo_args[@]}"
 }
+
+alias gclg='git-clone-with-org greensync'
+alias gclm='git-clone-with-org bettercaring'
 
 function ga {
   args="$@"
