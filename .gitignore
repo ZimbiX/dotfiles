@@ -12,4 +12,5 @@ secrets.zsh
 
 config.symlink/htop/
 config.symlink/kitty/kitty.app.icns
+config.symlink/op/config
 config.symlink/yarn/
