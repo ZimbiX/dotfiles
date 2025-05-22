@@ -24,7 +24,7 @@ find_existing_project_file() {
   dir_path="$1"
   absolute_dir_path=$(absolute_dir_path "$1") || exit 1
   if [[ -d "$PROJECTS"/000_Sublime ]]; then
-    grep -Rl "\"$absolute_dir_path\"" "$PROJECTS"/000_Sublime/*.sublime-project | head -1 || :
+    grep -Rl "\"$absolute_dir_path\"" "$PROJECTS"/000_Sublime/{,.}*.sublime-project | head -1 || :
   else
     echo "Sublime projects directory doesn't exist yet; creating directory: '$PROJECTS/000_Sublime'..." >&2
     mkdir -p "$PROJECTS"/000_Sublime
