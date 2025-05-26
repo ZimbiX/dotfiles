@@ -10,6 +10,8 @@ git/gitconfig.local.symlink
 secrets.zsh
 *-secrets*.zsh
 
+config.symlink/AWSVPNClient/
+config.symlink/AWS VPN Client/
 config.symlink/htop/
 config.symlink/kitty/kitty.app.icns
 config.symlink/op/config
