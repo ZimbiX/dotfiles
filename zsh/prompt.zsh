@@ -71,14 +71,10 @@ need_push () {
 }
 
 ruby_version() {
-  if (( $+commands[rbenv] ))
-  then
+  if (( $+commands[rbenv] )); then
     echo "$(rbenv version | awk '{print $1}')"
-  fi
-
-  if (( $+commands[rvm-prompt] ))
-  then
-    echo "$(rvm-prompt | awk '{print $1}')"
+  elif (( $+commands[asdf] )); then
+    echo "$(asdf current --no-header ruby | awk '{print $2}')"
   fi
 }
 
