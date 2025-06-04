@@ -178,11 +178,12 @@ gcom() {
 }
 
 # Return the name of the primary branch
+# Supports reading the branch name from the name of the directory, e.g. ~/Projects/myrepo:mybranch
 git-primary-branch-name() {
-  local dirname_branch
-  dirname_branch=$(git rev-parse --show-toplevel | grep -oP '(?<=:)\S+')
-  if [[ -n "$dirname_branch" ]]; then
-    echo -n "$dirname_branch"
+  local branch_from_dirname
+  branch_from_dirname=$(git rev-parse --show-toplevel | grep -oE ':\S+' | tr -d :)
+  if [[ -n "$branch_from_dirname" ]]; then
+    echo -n "$branch_from_dirname"
   elif git branch -al | grep -E '^ *remotes/(origin|upstream)/main$' > /dev/null; then
     echo -n main
   elif git branch -al | grep -E '^ *remotes/(origin|upstream)/master$' > /dev/null; then
