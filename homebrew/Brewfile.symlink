@@ -1,0 +1,92 @@
+# To regenerate this file, run: brew bundle dump --global --force --describe
+
+tap "hashicorp/tap"
+tap "systemmanic/yawsso"
+# Extendable version manager with support for Ruby, Node.js, Erlang & more
+brew "asdf"
+# Use AWS IAM credentials to authenticate to Kubernetes
+brew "aws-iam-authenticator"
+# Official Amazon AWS command-line interface
+brew "awscli"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Container runtimes on MacOS (and Linux) with minimal setup
+brew "colima"
+# Color-highlighted diff(1) output
+brew "colordiff"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# Isolated development environments using Docker
+brew "docker-compose"
+# Modern, maintained replacement for ls
+brew "eza"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GNU awk utility
+brew "gawk"
+# GNU Pretty Good Privacy (PGP) package
+brew "gnupg"
+# GitHub command-line tool
+brew "gh"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Graph visualization software from AT&T and Bell Labs
+brew "graphviz"
+# Kubernetes package manager
+brew "helm"
+# Improved top (interactive process viewer)
+brew "htop"
+# Add GitHub support to git on the command-line
+brew "hub"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Handy way to save and run project-specific commands
+brew "just"
+# Adds support for geographic objects to PostgreSQL
+brew "postgis"
+# Object-relational database system
+brew "postgresql@14", restart_service: :changed
+# Persistent key-value database, with built-in net interface
+brew "redis", restart_service: :changed
+# Install various Ruby versions and implementations
+brew "ruby-build"
+# Official tldr client written in Rust
+brew "tlrc"
+# Internet file retriever
+brew "wget"
+# Terraform
+brew "hashicorp/tap/terraform"
+# Yet Another AWS SSO - sync up AWS CLI v2 SSO login session to legacy CLI v1 credentials
+brew "systemmanic/yawsso/yawsso"
+# Password manager that keeps all passwords secure behind one password
+cask "1password"
+# Command-line interface for 1Password
+cask "1password-cli"
+# Enable Windows-like alt-tab
+cask "alt-tab"
+# Managed client-based VPN service to securely access AWS resources
+cask "aws-vpn-client"
+# Universal chat app powered by Matrix
+cask "beeper"
+# Free and open-source image editor
+cask "gimp"
+# Cross-platform Git credential storage for multiple hosting providers
+cask "git-credential-manager"
+# System monitoring app
+cask "istat-menus"
+# GPU-based terminal emulator
+cask "kitty"
+# Customise mouse behavior
+cask "linearmouse"
+# Remote pair programming
+cask "pop-app"
+# Emoji picker optimised for blind people
+cask "rocket"
+# Plugin for AWS CLI to start and end sessions that connect to managed instances
+cask "session-manager-plugin"
+# Media player based on MPlayer and mplayer2
+cask "stolendata-mpv"
+# Text editor for code, markup and prose
+cask "sublime-text"
+# Multimedia player
+cask "vlc"
