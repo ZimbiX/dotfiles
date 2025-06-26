@@ -10,7 +10,12 @@ log '~/.zshrc'
 export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/Projects
+if [[ -d "/Applications/Splashtop Streamer.app" ]]; then
+  # Mable requires ~/projects
+  export PROJECTS=~/projects
+else
+  export PROJECTS=~/Projects
+fi
 
 # initialize autocomplete here, otherwise functions won't be loaded
 # also load compdef so git-completion doesn't complain about no compdef

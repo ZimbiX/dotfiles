@@ -54,5 +54,7 @@
         diffFilter = delta --color-only
 [includeIf "gitdir:~/Projects/"]
         path = .gitconfig-projects
+[includeIf "gitdir:~/projects/"]
+        path = .gitconfig-projects
 [include]
         path = .gitconfig.local

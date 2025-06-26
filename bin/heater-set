@@ -15,14 +15,14 @@ trap cleanup exit
 rm -f /tmp/heater-set-completed
 
 make-request() {
-  PORT=$HEATER_PORT ~/Projects/000_Others/matthewhuie-wemo-cli/wemo-cli $HEATER_IP "$new_state" 2>&1 | tee /dev/stderr | grep '200 OK' >/dev/null
+  PORT=$HEATER_PORT $PROJECTS/000_Others/matthewhuie-wemo-cli/wemo-cli $HEATER_IP "$new_state" 2>&1 | tee /dev/stderr | grep '200 OK' >/dev/null
   if [[ $? == 0 ]]; then
     touch /tmp/heater-set-completed
   fi
 }
 
-if [[ ! -f ~/Projects/000_Others/matthewhuie-wemo-cli/wemo-cli ]]; then
-  echo "wemo-cli not found at: ~/Projects/000_Others/matthewhuie-wemo-cli/wemo-cli"
+if [[ ! -f $PROJECTS/000_Others/matthewhuie-wemo-cli/wemo-cli ]]; then
+  echo "wemo-cli not found at: $PROJECTS/000_Others/matthewhuie-wemo-cli/wemo-cli"
   exit 1
 fi
 

@@ -43,4 +43,4 @@ fi
 
 echo "New state: $new_state"
 
-PORT=$HEATER_PORT ~/Projects/000_Others/matthewhuie-wemo-cli/wemo-cli $HEATER_IP $new_state
+PORT=$HEATER_PORT $PROJECTS/000_Others/matthewhuie-wemo-cli/wemo-cli $HEATER_IP $new_state

@@ -1,1 +1,1 @@
-alias gg='cd ~/Projects/go/src/github.com/greensync'
+alias gg='cd $PROJECTS/go/src/github.com/greensync'

@@ -178,7 +178,7 @@ gcom() {
 }
 
 # Return the name of the primary branch
-# Supports reading the branch name from the name of the directory, e.g. ~/Projects/myrepo:mybranch
+# Supports reading the branch name from the name of the directory, e.g. $PROJECTS/myrepo:mybranch
 git-primary-branch-name() {
   local branch_from_dirname
   branch_from_dirname=$(git rev-parse --show-toplevel | grep -oE ':\S+' | tr -d :)
