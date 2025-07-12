@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+# Usage - e.g.:
+# mac-focus-app kitty
+# mac-focus-app chrome
+# mac-focus-app spotify
+
+# From: https://stackoverflow.com/a/7687123/1239774
+osascript <<EOF
+  tell app "$1"
+    reopen -- unminimizes the first minimized window or makes a new default window
+    activate -- makes the app frontmost
+  end tell
+EOF
