@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+# This script acquires permissions for temporary access to Mable's production environment via terminal
+# To use, ensure MABLE_EMAIL and GITHUB_USERNAME are set in your ~/.zshrc
+
+green='\e[32m'; blue='\e[36m'; red='\e[31m'; bold='\e[1m'; reset='\e[0m'
+coloured-arrow() { printf "$bold$1==> $2$reset\n"; }
+success() { coloured-arrow "$green" "$1"; }
+info() { coloured-arrow "$blue" "$1"; }
+err() { coloured-arrow "$red" "$1"; exit 1; }
+
+scriptStartedAt=$(date +%s)
+
+info "Triggering run..."
+gh -R bettercaring/better_caring workflow run assignProdPermission.yaml -f userMail="$MABLE_EMAIL"
+echo
+
+info "Waiting for run to be created..."
+while :; do
+  runInfo=$(gh -R bettercaring/better_caring run list --workflow=assignProdPermission.yaml --user="$GITHUB_USERNAME" --json=databaseId,createdAt | jq '.[0]')
+  runCreatedAt=$(echo "$runInfo" | jq -r .createdAt | ruby -r time -e 'p Time.parse(STDIN.read).to_i')
+  if [[ "$scriptStartedAt" -le "$runCreatedAt" ]]; then
+    break
+  fi
+  printf .
+  sleep 1
+done
+echo; echo
+
+info "Watching run, waiting for completion..."
+runId=$(echo "$runInfo" | jq -r .databaseId)
+while :; do
+  runView=$(CLICOLOR_FORCE=1 gh -R bettercaring/better_caring run view -v "$runId")
+  if [[ -n "${lineCount-}" ]]; then
+    printf "\e[${lineCount}F" # Move cursor to beginning of line, n lines up
+    printf "\e[0J" # Clear from cursor to end of screen
+  fi
+  echo "$runView"
+  if echo "$runView" | grep -E '✓.*Complete job' >/dev/null; then
+    break
+  fi
+  sleep 1
+  lineCount=$(echo "$runView" | wc -l | tr -d '\n ')
+done
+echo
+
+success "Done. Now run: switch-env prd-lw"
