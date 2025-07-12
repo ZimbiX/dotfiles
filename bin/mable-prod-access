@@ -3,7 +3,11 @@
 set -Eeuo pipefail
 
 # This script acquires permissions for temporary access to Mable's production environment via terminal
-# To use, ensure MABLE_EMAIL and GITHUB_USERNAME are set in your ~/.zshrc
+# To use, ensure:
+# - github-cli (gh) is installed and authenticated
+# - jq is installed
+# - ruby is installed
+# - MABLE_EMAIL and GITHUB_USERNAME are set in your ~/.zshrc
 
 green='\e[32m'; blue='\e[36m'; red='\e[31m'; bold='\e[1m'; reset='\e[0m'
 coloured-arrow() { printf "$bold$1==> $2$reset\n"; }
