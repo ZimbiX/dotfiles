@@ -3,10 +3,12 @@
 set -Eeuo pipefail
 
 if [[ "${PODMAN-}" == "true" ]]; then
-  podman "$@"
+  exec podman "$@"
 elif [[ "$1" == compose ]]; then
   shift
-  docker-compose "$@"
+  exec docker-compose "$@"
+elif [[ "${OSTYPE-}" == darwin* ]]; then
+  exec "$(orig docker)" "$@"
 else
-  sudo -E "$(orig docker)" "$@"
+  exec sudo -E "$(orig docker)" "$@"
 fi
