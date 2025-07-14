@@ -1,28 +1,102 @@
 {
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
   "schemes" : [
     {
-      "pointer" : {
-        "speed" : 0.2612,
-        "acceleration" : 0.1246,
-        "disableAcceleration" : false
-      },
       "if" : {
         "device" : {
-          "productName" : "ROCCAT Kova Aimo",
           "vendorID" : "0x1e7d",
           "productID" : "0x2cf1",
-          "category" : "mouse"
+          "category" : "mouse",
+          "productName" : "ROCCAT Kova Aimo"
+        }
+      },
+      "pointer" : {
+        "disableAcceleration" : false,
+        "acceleration" : 0.1246,
+        "speed" : 0.2612
+      },
+      "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "command" : {
+              "type" : "zoom"
+            },
+            "option" : {
+              "type" : "preventDefault"
+            },
+            "shift" : {
+              "type" : "preventDefault"
+            },
+            "control" : {
+              "type" : "preventDefault"
+            }
+          }
+        },
+        "acceleration" : {
+          "vertical" : 0.2
+        },
+        "speed" : {
+          "vertical" : 20
+        }
+      }
+    },
+    {
+      "if" : {
+        "app" : "org.coscreen.CoScreen",
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x2cf1",
+          "vendorID" : "0x1e7d",
+          "productName" : "ROCCAT Kova Aimo"
         }
       },
       "scrolling" : {
         "speed" : {
-          "vertical" : 20
+          "vertical" : 7
+        },
+        "distance" : {
+          "vertical" : "auto"
+        },
+        "modifiers" : {
+          "vertical" : {
+            "command" : {
+              "type" : "preventDefault"
+            }
+          }
         },
         "acceleration" : {
           "vertical" : 0.2
         }
       }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "vendorID" : "0x1e7d",
+          "productID" : "0x2cf1",
+          "productName" : "ROCCAT Kova Aimo"
+        },
+        "app" : "com.apple.Preview"
+      },
+      "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "command" : {
+              "type" : "pinchZoom"
+            },
+            "option" : {
+              "type" : "preventDefault"
+            },
+            "shift" : {
+              "type" : "preventDefault"
+            },
+            "control" : {
+              "type" : "preventDefault"
+            }
+          }
+        }
+      }
     }
-  ],
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+  ]
 }
