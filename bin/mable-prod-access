@@ -1,7 +1,18 @@
 #!/bin/bash
 
 # This script acquires permissions for temporary access to Mable's production environment via terminal
+#
+# To install, run:
+#
+# ```
+# git clone https://github.com/ZimbiX/dotfiles ~/projects/ZimbiX-dotfiles
+# mkdir -p ~/.bin
+# for script in mable-prod-access gh-workflow-run ci-run; do ln -sf ~/projects/ZimbiX-dotfiles/bin/$script ~/.bin; done
+# echo 'export PATH=$HOME/.bin:$PATH' >> ~/.zshrc && . ~/.zshrc
+# ```
+#
 # To use, ensure:
+#
 # - github-cli (gh) is installed and authenticated
 # - jq is installed
 # - ruby is installed
