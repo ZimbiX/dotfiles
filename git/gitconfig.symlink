@@ -29,6 +29,8 @@
         prompt = false
 [help]
         autocorrect = 1
+[commit]
+        verbose = true
 [push]
         default = simple
 [advice]
