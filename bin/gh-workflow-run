@@ -1,0 +1,88 @@
+#!/bin/bash
+
+# Usage: gh-workflow-run -R my_org/my_repo my-workflow.yaml -f myWorkflowArg=someValue
+# All args as passed through to `gh workflow run`, other than:
+#   --watch
+#     Show the run's details until it finishes. Off by default
+
+set -Eeuo pipefail
+
+green='\e[32m'; blue='\e[36m'; red='\e[31m'; bold='\e[1m'; reset='\e[0m'
+coloured-arrow() { printf "$bold$1==> $2$reset\n"; }
+success() { coloured-arrow "$green" "$1"; }
+info() { coloured-arrow "$blue" "$1"; }
+err() { coloured-arrow "$red" "$1"; exit 1; }
+
+scriptStartedAt=$(date +%s)
+
+workflow_filename=
+watch_run=false
+repo_args=()
+args=()
+
+while [[ $# != 0 ]]; do
+  case "$1" in
+    --watch)
+      watch_run=true
+      shift
+      ;;
+    -R | --repo)
+      repo_args=("$1" "$2")
+      shift; shift
+      ;;
+    *)
+      if [[ -z "$workflow_filename" ]]; then
+        workflow_filename="$1"
+      else
+        args+=("$1")
+      fi
+      shift
+      ;;
+  esac
+done
+
+if [[ -z "$workflow_filename" ]]; then
+  err "Error: Workflow filename is required"
+fi
+
+info "Triggering run..."
+gh ${repo_args[@]+"${repo_args[@]}"} workflow run "$workflow_filename" ${args[@]+"${args[@]}"}
+echo
+
+info "Waiting for run to be created..."
+while :; do
+  runInfo=$(gh ${repo_args[@]+"${repo_args[@]}"} run list --workflow="$workflow_filename" --user="$GITHUB_USERNAME" --json=databaseId,createdAt,url | jq '.[0]')
+  runCreatedAt=$(echo "$runInfo" | jq -r .createdAt | ruby -r time -e 'p Time.parse(STDIN.read).to_i')
+  if [[ "$scriptStartedAt" -le "$runCreatedAt" ]]; then
+    break
+  fi
+  printf .
+  sleep 1
+done
+echo; echo
+echo "$runInfo" | jq -r .url
+echo
+
+if [[ "$watch_run" == false ]]; then
+  success "Run created"
+  exit 0
+fi
+
+info "Watching run, waiting for completion..."
+runId=$(echo "$runInfo" | jq -r .databaseId)
+while :; do
+  runView=$(CLICOLOR_FORCE=1 gh ${repo_args[@]+"${repo_args[@]}"} run view -v "$runId")
+  if [[ -n "${lineCount-}" ]]; then
+    printf "\e[${lineCount}F" # Move cursor to beginning of line, n lines up
+    printf "\e[0J" # Clear from cursor to end of screen
+  fi
+  echo "$runView"
+  if echo "$runView" | grep -E '✓.*Complete job' >/dev/null; then
+    break
+  fi
+  sleep 1
+  lineCount=$(echo "$runView" | wc -l | tr -d '\n ')
+done
+echo
+
+success "Done"

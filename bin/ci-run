@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+case "$(git remote get-url origin)" in
+  git@github.com:bettercaring/better_caring) workflow_filename=pr-checks.yml ;;
+  git@github.com:bettercaring/web-frontend)  workflow_filename=pr-sanity-checks.yml ;;
+esac
+
+gh-workflow-run "$workflow_filename" --ref "$(git rev-parse --abbrev-ref HEAD)" "$@"
