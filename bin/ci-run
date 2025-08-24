@@ -2,9 +2,45 @@
 
 set -Eeuo pipefail
 
-case "$(git remote get-url origin)" in
-  git@github.com:bettercaring/better_caring) workflow_filename=pr-checks.yml ;;
-  git@github.com:bettercaring/web-frontend)  workflow_filename=pr-sanity-checks.yml ;;
-esac
+workflow_filenames_for_primary_branch=(
+  trunk-based-deployment.yaml # better_caring
+  trunk-based-workflow.yml    # web-frontend
+  build-and-test.yml          # sp-mobile-app
+)
 
-gh-workflow-run "$workflow_filename" --ref "$(git rev-parse --abbrev-ref HEAD)" "$@"
+workflow_filenames_for_other_branch=(
+  pr-checks.yml               # better_caring
+  pr-sanity-checks.yml        # web-frontend, mobileApp4
+  build-and-test.yml          # sp-mobile-app
+)
+
+workflow_filename_if_exists() {
+  if [[ -f "$(git rev-parse --show-toplevel)/.github/workflows/$1" ]]; then
+    echo -n "$1"
+  else
+    return 1
+  fi
+}
+
+find_workflow_filename() {
+  for filename in "${workflow_filenames_to_find[@]}"; do
+    workflow_filename_if_exists "$filename" && return || :
+  done
+  fail
+}
+
+fail() {
+  echo "Unable to find suitable GitHub Actions workflow" >&2
+  exit 1
+}
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+if [[ "$branch" =~ ^(main|master)$ ]]; then
+  workflow_filenames_to_find=(${workflow_filenames_for_primary_branch[@]})
+else
+  workflow_filenames_to_find=(${workflow_filenames_for_other_branch[@]})
+fi
+workflow_filename="$(find_workflow_filename)"
+
+set -x
+gh-workflow-run "$workflow_filename" --ref "$branch" "$@"
