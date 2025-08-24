@@ -6,7 +6,7 @@ workflow_filenames_for_primary_branch=(
   trunk-based-deployment.yaml # better_caring
   trunk-based-workflow.yml    # web-frontend
   build-and-test.yml          # sp-mobile-app
-  deploy.yml                  # feature_flag_proxy, connections-service, identity-verification
+  deploy.yml                  # feature_flag_proxy, connections-service, identity-verification, need-service
   ruby.yml                    # loyalty-service, serve-matches
 )
 
@@ -14,7 +14,7 @@ workflow_filenames_for_other_branch=(
   pr-checks.yml               # better_caring
   pr-sanity-checks.yml        # web-frontend, mobileApp4
   build-and-test.yml          # sp-mobile-app
-  test.yml                    # feature_flag_proxy, loyalty-service, identity-verification
+  test.yml                    # feature_flag_proxy, loyalty-service, identity-verification, need-service
   ruby.yml                    # serve-matches
   ci.yml                      # connections-service
 )
