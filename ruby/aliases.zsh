@@ -10,6 +10,9 @@ alias bers='bundle exec rails s'
 alias berc='bundle exec rails c'
 alias bets='bundle exec thin start'
 alias besh='bundle exec shotgun'
+alias bub='log_and_run_command bundle update --bundler'
+
+alias gus='log_and_run_command gem update --system'
 
 gem-browse-source-url() {
   (
@@ -25,4 +28,4 @@ gem-browse-source-url() {
     open "$source_url" &>/dev/null
   )
 }
-alias gemb=gem-browse-source-url
+alias gemb='log_and_run_command gem-browse-source-url'
