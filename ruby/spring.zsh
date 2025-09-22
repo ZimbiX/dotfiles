@@ -5,4 +5,4 @@
 export PGGSSENCMODE="disable" # if this doesn't work, use "false"
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
-export SPRING_LOG=/dev/fd/2
+# export SPRING_LOG=/dev/fd/2
