@@ -166,11 +166,9 @@ alias ghbb='hub-silent browse -- branches'
 # Check out the primary branch
 gcom() {
   local branch_name
-  branch_name="$(git-primary-branch-name)"
+  branch_name="$(git-primary-branch-name)" || return 1
   if [[ -n "$branch_name" ]]; then
     log_and_run_command git checkout "$branch_name"
-  else
-    echo "Couldn't determine primary branch; assuming repo has no commits"
   fi
 }
 
@@ -191,6 +189,9 @@ git-primary-branch-name() {
     echo -n main
   elif git branch -al | grep -E '^[* ] master$' > /dev/null; then
     echo -n master
+  else
+    echo "Couldn't determine primary branch; assuming repo has no commits" >&2
+    return 1
   fi
 }
 
