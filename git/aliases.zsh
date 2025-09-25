@@ -85,10 +85,7 @@ function hub-silent {
   hub "$@" >/dev/null
 }
 
-# The rest of my fun git aliases
-# alias gl='git pull --prune'
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-# alias gl='git log --graph'
 alias glp='git log -p'
 alias gsh='git show'
 alias gf='git fetch'
@@ -110,9 +107,7 @@ alias gcb='git copy-branch-name'
 alias gb='git branch'
 alias gbl='gb -a --sort=committerdate --color'
 alias gblr='gbl | tail'
-alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
-# alias gs='git status'
-
+alias gs='git status -sb'
 alias gds='git diff --staged'
 alias gdh='git diff HEAD'
 alias gpl='git pull'
