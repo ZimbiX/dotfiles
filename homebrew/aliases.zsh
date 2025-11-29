@@ -1,1 +1,5 @@
-alias brup="log_and_run_command 'brew update && brew upgrade && brew upgrade --cask --greedy'"
+brup() {
+  log_and_run_command brew update -v && \
+  log_and_run_command brew upgrade && \
+  log_and_run_command brew upgrade --cask --greedy
+}
