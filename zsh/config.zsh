@@ -11,7 +11,12 @@ fpath=($ZSH/functions $fpath)
 
 autoload -U $ZSH/functions/*(:t)
 
-HISTFILE=~/.zsh_history
+# Auto-migrate to custom zsh history path
+if [[ ! -f ~/.zsh_history_zimbix ]] && [[ -f ~/.zsh_history ]]; then
+  mv ~/.zsh_history ~/.zsh_history_zimbix
+fi
+
+HISTFILE=~/.zsh_history_zimbix
 HISTSIZE=1000000000
 SAVEHIST=1000000000
 
