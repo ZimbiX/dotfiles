@@ -35,43 +35,29 @@ alias gclg='git-clone-with-org greensync'
 alias gclm='git-clone-with-org bettercaring'
 
 function ga {
-  args="$@"
+  args=("$@")
   if [ -z "$1" ]; then
-    args="."
+    args=(.)
   fi
-  eval git add $args
-}
-
-log_command() {
-  echo -n "\e[34m" >&2
-  echo -n '--> ' >&2
-  echo -n "$@" >&2
-  echo "\e[39m" >&2
-}
-
-log_and_run_command() {
-  log_command "$@"
-  eval "$@"
+  log_and_run_command git add "${args[@]}"
 }
 
 alias gr='git reset'
 
 function grh {
-  args="$@"
-  log_and_run_command git reset --hard $args
+  log_and_run_command git reset --hard "$@"
 }
 
 function gp {
-  args="$@"
+  args=("$@")
   if [ -z "$1" ]; then
-    args="origin HEAD"
+    args=(origin HEAD)
   fi
-  log_and_run_command git push $args
+  log_and_run_command git push "${args[@]}"
 }
 
 function gsubs {
-  args="$@"
-  log_and_run_command git submodule foreach $args
+  log_and_run_command git submodule foreach "$@"
 }
 
 function wip {

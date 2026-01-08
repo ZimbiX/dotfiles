@@ -6,6 +6,8 @@ alias bi='bundle install'
 alias be='bundle exec'
 alias bu='bundle update'
 
+alias r='log_and_run_command bin/spring rspec --order=defined'
+
 alias bers='bundle exec rails s'
 alias berc='bundle exec rails c'
 alias bets='bundle exec thin start'
