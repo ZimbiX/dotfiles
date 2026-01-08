@@ -24,4 +24,4 @@ green='\e[32m'; reset='\e[0m'
 
 gh-workflow-run -R bettercaring/better_caring assignProdPermission.yaml -f userMail="$MABLE_EMAIL" --watch
 
-printf "${green}Now run: switch-env prd-lw${reset}\n"
+printf "${green}Now run: switch-env prd-lw (alias: sep)${reset}\n"
