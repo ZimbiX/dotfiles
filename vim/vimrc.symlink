@@ -8,3 +8,5 @@ set tabstop=2
 set shiftwidth=2
 " On pressing tab, insert 4 spaces
 set expandtab
+" Prevent automatically hard-wrapping long lines (inserting newline characters)
+set formatoptions-=t
