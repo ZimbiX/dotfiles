@@ -123,7 +123,7 @@ alias gra='git remote add'
 alias grr='git remote remove'
 
 alias cis='hub ci-status -v --color'
-alias ci='cis | tee /dev/stderr | grep -oE "https://\S+" | head -1 | sed -E "s=/job/[0-9]+\$==" | xargs -r open &>/dev/null'
+alias ci='cis | tee /dev/stderr | grep -oE "https://\S+" | grep -v .aws. | head -1 | sed -E "s=/job/[0-9]+\$==" | xargs -r open &>/dev/null'
 alias cir=ci-run
 
 ci-wait() {
