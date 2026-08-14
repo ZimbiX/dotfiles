@@ -24,7 +24,7 @@ setopt interactivecomments
 alias ls="$ls_bin"
 
 if (( $+commands[eza] )); then
-  alias l="eza -alF --icons --colour-scale --header --git -g"
+  alias l="eza -alF --icons --color-scale --header --git -g"
 else
   alias l="ls -alF --color"
 fi
